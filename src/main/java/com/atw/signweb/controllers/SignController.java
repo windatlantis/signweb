@@ -3,7 +3,7 @@ package com.atw.signweb.controllers;
 /**
  * @author Karl
  * @Description
- * @date 2019/1/9 22:00
+ * @date 2019/1/12 13:17
  */
-public class MainController {
+public class SignController {
 }
