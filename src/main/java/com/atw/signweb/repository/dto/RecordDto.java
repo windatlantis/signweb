@@ -1,8 +1,11 @@
 package com.atw.signweb.repository.dto;
 
 import com.atw.signweb.pojo.db.RecordDo;
+import com.atw.signweb.pojo.db.UserDo;
 import com.atw.signweb.pojo.vo.RecordVo;
+import com.atw.signweb.repository.service.UserService;
 import com.atw.signweb.util.CheckUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.time.Instant;
@@ -15,18 +18,21 @@ import java.time.ZoneId;
  * @date 2019/1/15 22:32
  */
 @Repository
-public class RecordDto {
+public class RecordDto implements IDto<RecordDo, RecordVo> {
 
-	public RecordDo convertDo(RecordVo recordVo) {
-		if (recordVo != null) {
-			if (CheckUtil.isEmpty(recordVo.getOpenid())) {
-				throw new RuntimeException("RecordVo openid is null.");
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private UserDto userDto;
+
+	@Override
+	public RecordDo convertToDo(RecordVo v) {
+		if (v != null) {
+			if (CheckUtil.isEmpty(v.getOpenid())) {
+				throw new IllegalStateException("RecordVo openid cannot be null.");
 			}
 			RecordDo recordDo = new RecordDo();
-			recordDo.setOpenid(recordVo.getOpenid());
-			recordDo.setUnionid(recordVo.getUnionid());
-			recordDo.setNickname(recordVo.getNickname());
-			recordDo.setHeadimgurl(recordVo.getHeadimgurl());
+			recordDo.setOpenid(v.getOpenid());
 			recordDo.setSignday(Instant.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault())).toEpochMilli());
 
 			return recordDo;
@@ -35,14 +41,17 @@ public class RecordDto {
 		return null;
 	}
 
-	public RecordVo convertVo(RecordDo recordDo) {
-		if (recordDo != null) {
+	@Override
+	public RecordVo convertToVo(RecordDo d) {
+		if (d != null) {
 			RecordVo recordVo = new RecordVo();
-			recordVo.setOpenid(recordDo.getOpenid());
-			recordVo.setUnionid(recordDo.getUnionid());
-			recordVo.setNickname(recordDo.getNickname());
-			recordVo.setHeadimgurl(recordDo.getHeadimgurl());
-			recordVo.setSignday(recordDo.getSignday());
+			recordVo.setId(d.getId());
+			recordVo.setOpenid(d.getOpenid());
+			recordVo.setSigntime(d.getCreatetime());
+			recordVo.setState(d.getState());
+
+			UserDo userDo = userService.getById(recordVo.getOpenid());
+			recordVo.setUserVo(userDto.convertToVo(userDo));
 
 			return recordVo;
 		}

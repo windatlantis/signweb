@@ -15,11 +15,8 @@ public class RecordDo {
 	private Short isdelete;
 
 	private String openid;
-	private String unionid;
-	private String nickname;
-	private String headimgurl;
-
 	private Long signday;
+	private Integer state;
 
 	public String getId() {
 		return id;
@@ -61,35 +58,19 @@ public class RecordDo {
 		this.openid = openid;
 	}
 
-	public String getUnionid() {
-		return unionid;
-	}
-
-	public void setUnionid(String unionid) {
-		this.unionid = unionid;
-	}
-
-	public String getNickname() {
-		return nickname;
-	}
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
-
-	public String getHeadimgurl() {
-		return headimgurl;
-	}
-
-	public void setHeadimgurl(String headimgurl) {
-		this.headimgurl = headimgurl;
-	}
-
 	public Long getSignday() {
 		return signday;
 	}
 
 	public void setSignday(Long signday) {
 		this.signday = signday;
+	}
+
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
 	}
 }

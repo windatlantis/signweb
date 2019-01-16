@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * @author Karl
@@ -13,12 +14,11 @@ import java.time.format.DateTimeFormatter;
 public class RecordVo {
 
 	private String id;
+	private Date signtime;
 	private String openid;
-	private String unionid;
-	private String nickname;
-	private String headimgurl;
+	private Integer state;
 
-	private Long signday;
+	private UserVo userVo;
 
 	public String getId() {
 		return id;
@@ -26,6 +26,20 @@ public class RecordVo {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public Date getSigntime() {
+		return signtime;
+	}
+
+	public void setSigntime(Date signtime) {
+		this.signtime = signtime;
+	}
+
+	public String getSigntimeFormat() {
+		Instant instant = signtime.toInstant();
+		LocalDateTime dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+		return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(dateTime);
 	}
 
 	public String getOpenid() {
@@ -36,41 +50,19 @@ public class RecordVo {
 		this.openid = openid;
 	}
 
-	public String getUnionid() {
-		return unionid;
+	public Integer getState() {
+		return state;
 	}
 
-	public void setUnionid(String unionid) {
-		this.unionid = unionid;
+	public void setState(Integer state) {
+		this.state = state;
 	}
 
-	public String getNickname() {
-		return nickname;
+	public UserVo getUserVo() {
+		return userVo;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
-
-	public String getHeadimgurl() {
-		return headimgurl;
-	}
-
-	public void setHeadimgurl(String headimgurl) {
-		this.headimgurl = headimgurl;
-	}
-
-	public Long getSignday() {
-		return signday;
-	}
-
-	public void setSignday(Long signday) {
-		this.signday = signday;
-	}
-
-	public String getSigndayFormat() {
-		Instant instant = Instant.ofEpochMilli(signday);
-		LocalDateTime dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
-		return DateTimeFormatter.ofPattern("yyyy-MM-dd").format(dateTime);
+	public void setUserVo(UserVo userVo) {
+		this.userVo = userVo;
 	}
 }

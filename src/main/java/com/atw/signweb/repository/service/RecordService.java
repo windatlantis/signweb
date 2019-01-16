@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
 import java.util.Date;
-import java.util.UUID;
 
 /**
  * @author Karl
@@ -14,15 +13,17 @@ import java.util.UUID;
  * @date 2019/1/14 23:00
  */
 @Repository
-public class RecordService {
+public class RecordService implements IService<String, RecordDo> {
 
 	@Resource
 	private RecordDao recordDao;
 
-	public RecordDo getRecordDo(String id) {
+	@Override
+	public RecordDo getById(String id) {
 		return recordDao.getById(id);
 	}
 
+	@Override
 	public String insert(RecordDo recordDo) {
 		recordDo.setId(createID());
 		Date now = now();
@@ -33,20 +34,16 @@ public class RecordService {
 		return recordDao.insert(recordDo);
 	}
 
+	@Override
 	public void update(RecordDo recordDo) {
 		recordDo.setUpdatetime(now());
 		recordDao.update(recordDo);
 	}
 
-	public void delete(String id) {
+	@Override
+	public void deleteById(String id) {
 		recordDao.deleteById(id);
 	}
 
-	private String createID() {
-		return UUID.randomUUID().toString().replace("-", "");
-	}
 
-	private Date now() {
-		return new Date();
-	}
 }

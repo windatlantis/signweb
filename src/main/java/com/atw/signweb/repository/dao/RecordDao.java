@@ -25,15 +25,15 @@ public interface RecordDao {
 			+ "</script>")
 	RecordDo getByIds(String ids);
 
-	@Insert("insert into "+table+" values (#{id},#{createtime},#{updatetime},#{isdelete},#{openid},#{unionid},#{nickname},#{headimgurl},#{signday})")
+	@Insert("insert into "+table+" values (#{id},#{createtime},#{updatetime},#{isdelete},#{openid},#{signday},#{state})")
 	String insert(RecordDo recordDo);
 
-	@Update("update "+table+" set updatetime=#{updatetime},isdelete=#{isdelete},openid=#{openid},unionid=#{unionid},nickname=#{nickname},headimgurl=#{headimgurl},signday=#{signday} where id=#{id}")
+	@Update("update "+table+" set updatetime=#{updatetime},state=#{state} where id=#{id}")
 	void update(RecordDo recordDo);
 
 	@Update("update "+table+" set isdelete=1")
 	void deleteLogicallyById(String id);
 
-	@Delete("delete from "+table+" where id=#{id}")
+	@Delete("deleteById from "+table+" where id=#{id}")
 	void deleteById(String id);
 }
